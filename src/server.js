@@ -4,36 +4,21 @@ const redis = require("redis");
 const RedisStore = require("connect-redis")(session);
 
 const redisClient = redis.createClient();
+redisClient.on("error", (err) => {
+  console.log(`RedisError: ${err}`);
+});
 
 const app = express();
 require("dotenv").config();
 
-const mongoose = require("mongoose");
-
-const dbConnection = async () => {
-  try {
-    await mongoose.connect(
-      `mongodb+srv://mspiewak:${process.env.DB_PASS_PASSWORD}@cluster0.rczr8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-    );
-  } catch (error) {
-    console.log(error);
-  }
-  mongoose.connection.on("error", (err) => {
-    console.log(err.message);
-  });
-};
-
+const { dbConnection } = require("./nodeConnection");
 dbConnection();
 
-var bodyParser = require("body-parser");
-const User = require("./models/User");
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(
   session({
-    secret: "secret",
+    secret: process.env.REDIS_SECRET,
     store: new RedisStore({
       host: "localhost",
       port: 6379,
@@ -44,31 +29,9 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  if (req.session.key) {
-    res.redirect("/home");
-  } else {
-    res.json({ message: "brak sesji" });
-  }
-});
+const UserRouter = require("./routes/UserRouter");
 
-app.post("/", async (req, res) => {
-  const user = new User({
-    _id: new mongoose.Types.ObjectId(),
-    email: req.body.email,
-    password: req.body.password,
-  });
-  await user
-    .save()
-    .then((docs) => {
-      res.status(200).json({
-        info: docs,
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err.message });
-    });
-});
+app.use("/", UserRouter);
 
 const port = process.env.PORT || 3000;
 
