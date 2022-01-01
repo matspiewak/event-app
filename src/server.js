@@ -1,35 +1,44 @@
 const express = require("express");
+require("dotenv").config();
+const { dbConnection } = require("./nodeConnection");
 const session = require("express-session");
 const redis = require("redis");
-const RedisStore = require("connect-redis")(session);
 
-const redisClient = redis.createClient();
+let RedisStore = require("connect-redis")(session);
+let redisClient = redis.createClient({
+  host: "localhost",
+  port: 6379,
+});
+
+const app = express();
+
+redisClient.on("connect", () => {
+  console.log("RedisClient connected successfully");
+});
 redisClient.on("error", (err) => {
   console.log(`RedisError: ${err}`);
 });
 
-const app = express();
-require("dotenv").config();
-
-const { dbConnection } = require("./nodeConnection");
 dbConnection();
 
 app.use(express.json());
+
+const UserRouter = require("./routes/UserRouter");
 
 app.use(
   session({
     secret: process.env.REDIS_SECRET,
     store: new RedisStore({
-      host: "localhost",
-      port: 6379,
       client: redisClient,
     }),
     saveUninitialized: false,
     resave: false,
+    cookie: {
+      secure: false,
+      httpOnly: false,
+    },
   })
 );
-
-const UserRouter = require("./routes/UserRouter");
 
 app.use("/", UserRouter);
 
