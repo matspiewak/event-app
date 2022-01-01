@@ -9,9 +9,21 @@ const app = express();
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-mongoose.connect(
-  `mongodb+srv://mspiewak:${process.env.DB_PASS_PASSWORD}@cluster0.rczr8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-);
+
+const dbConnection = async () => {
+  try {
+    await mongoose.connect(
+      `mongodb+srv://mspiewak:${process.env.DB_PASS_PASSWORD}@cluster0.rczr8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+  mongoose.connection.on("error", (err) => {
+    console.log(err.message);
+  });
+};
+
+dbConnection();
 
 var bodyParser = require("body-parser");
 const User = require("./models/User");
@@ -61,5 +73,5 @@ app.post("/", async (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`server runs on port ${process.env.DB_PASS_PASSWORD}`);
+  console.log(`server runs on port ${port}`);
 });
