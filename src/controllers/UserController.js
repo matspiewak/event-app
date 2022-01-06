@@ -19,6 +19,7 @@ exports.signUp = async (req, res) => {
     });
 };
 
+//* generates cookie
 exports.signIn = async (req, res) => {
   const session = req.session;
   User.findOne({

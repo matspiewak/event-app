@@ -4,25 +4,32 @@ const { dbConnection } = require("./nodeConnection");
 const session = require("express-session");
 const redis = require("redis");
 
+let Promise = require('bluebird')
+Promise.promisifyAll(redis.RedisClient.prototype)
+Promise.promisifyAll(redis.Multi.prototype)
+
 let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient({
-  host: "localhost",
-  port: 6379,
+  host: process.env.REDIS_HOST,
+  port: 6380,
+  auth_pass: process.env.REDIS_AUTH,
+  tls: {
+    servername: process.env.REDIS_HOST
+  }
 });
 
 const app = express();
 
-redisClient.on("connect", () => {
-  console.log("RedisClient connected successfully");
+redisClient.on("connect", async () => {
+  console.log("RedisClient connected successfully: " + await redisClient.pingAsync());
 });
-redisClient.on("error", (err) => {
-  console.log(`RedisError: ${err}`);
+redisClient.on("error", async (err) => {
+  console.log(`RedisError: ${await err}`);
 });
 
 dbConnection();
 
 app.use(express.json());
-
 const UserRouter = require("./routes/UserRouter");
 
 app.use(
