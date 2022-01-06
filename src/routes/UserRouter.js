@@ -4,8 +4,7 @@ const User_Controller = require("../controllers/UserController");
 
 router.post("/signup", User_Controller.signUp);
 router.post("/signin",User_Controller.signIn)
-router.get("/signup", (req, res) => {
-  res.send("elo");
-});
+router.get("/user", User_Controller.getUser);
+router.get("/user2", User_Controller.getUserRedis);
 
 module.exports = router;

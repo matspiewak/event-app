@@ -35,3 +35,29 @@ exports.signIn = async (req, res) => {
       res.status(500).json({ err: err.message });
     });
 };
+
+exports.getUser = async (req, res) => {
+  const session = req.session;
+  User.findOne({
+    email: req.body.email,
+    password: req.body.password,
+  })
+    .then((user) => {
+      session.email = user.email,
+      session.password = user.password
+      res.status(200).json({ user });    
+    })
+    .catch((err) => {
+      res.status(500).json({ err: err.message });
+    });
+};
+
+exports.getUserRedis = async (req, res) => {
+  const session = req.session;
+  if (session) {
+    res.status(200).json({
+      user: session.email,
+      password: session.password
+    })
+  }
+};
