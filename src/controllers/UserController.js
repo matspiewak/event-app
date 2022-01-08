@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 
 exports.signUp = async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     email: req.body.email,
-    password: req.body.password,
+    password: hashedPassword,
   });
   await user
     .save()
@@ -20,44 +23,19 @@ exports.signUp = async (req, res) => {
 };
 
 //* generates cookie
-exports.signIn = async (req, res) => {
+exports.signIn = async (req, res, next) => {
   const session = req.session;
-  User.findOne({
-    email: req.body.email,
-    password: req.body.password,
-  })
-    .then((user) => {
-      session.email = user.email,
-      session.password = user.password
-      res.status(200).json({ user });    
-    })
-    .catch((err) => {
-      res.status(500).json({ err: err.message });
-    });
-};
-
-exports.getUser = async (req, res) => {
-  const session = req.session;
-  User.findOne({
-    email: req.body.email,
-    password: req.body.password,
-  })
-    .then((user) => {
-      session.email = user.email,
-      session.password = user.password
-      res.status(200).json({ user });    
-    })
-    .catch((err) => {
-      res.status(500).json({ err: err.message });
-    });
-};
-
-exports.getUserRedis = async (req, res) => {
-  const session = req.session;
-  if (session) {
-    res.status(200).json({
-      user: session.email,
-      password: session.password
-    })
-  }
+  passport.authenticate("signin", async (err, user, info) => {
+    try {
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      req.login(user, { session: false }, async (error) => {
+        session.email = user.email;
+        res.status(200).json("Succesfully signed in");
+      });
+    } catch (error) {
+      return;
+    }
+  })(req, res, next);
 };

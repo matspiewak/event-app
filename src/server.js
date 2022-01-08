@@ -3,6 +3,7 @@ require("dotenv").config();
 const { dbConnection } = require("./nodeConnection");
 const session = require("express-session");
 const redis = require("redis");
+const passport = require('passport');
 
 let Promise = require('bluebird')
 Promise.promisifyAll(redis.RedisClient.prototype)
@@ -46,6 +47,10 @@ app.use(
     },
   })
 );
+
+require("./config/passport-strategies");
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", UserRouter);
 
