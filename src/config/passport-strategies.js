@@ -17,7 +17,7 @@ passport.use(
           return done(null, false, { message: "User not found" });
         }
         if (await bcrypt.compare(password, user.password)) {
-          return done(null, user, { message: "Logged in Successfully" });
+          return done(null, user, { message: "Signed in Successfully" });
         } else {
           return done(null, false, { message: "Wrong Password" });
         }

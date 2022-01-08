@@ -23,16 +23,17 @@ exports.signUp = async (req, res) => {
 };
 
 //* generates cookie
+
 exports.signIn = async (req, res, next) => {
   const session = req.session;
   passport.authenticate("signin", async (err, user, info) => {
     try {
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json(info);
       }
-      req.login(user, { session: false }, async (error) => {
+      req.login(user, { session: false }, () => {
         session.email = user.email;
-        res.status(200).json("Succesfully signed in");
+        res.status(200).json(info);
       });
     } catch (error) {
       return;
