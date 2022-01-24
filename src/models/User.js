@@ -1,16 +1,38 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const validate = require('validator')
 
 const userSchema = new Schema({
   _id: mongoose.Types.ObjectId,
   email: {
     type: String,
     required: true,
+    validate: [validate.isEmail,'not email']
   },
   password: {
     type: String,
     required: true,
+    min: [8, 'Must be at least 8, got {VALUE}'],
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  isOrganiser: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  dateOfBirth: {
+    type: Date,
+    required: false,
+    min: '1900-01-01',
+    max: Date.now()
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);

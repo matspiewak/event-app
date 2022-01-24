@@ -9,6 +9,7 @@ exports.signUp = async (req, res) => {
     _id: new mongoose.Types.ObjectId(),
     email: req.body.email,
     password: hashedPassword,
+    name: req.body.name
   });
   await user
     .save()
