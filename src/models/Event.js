@@ -42,7 +42,7 @@ const eventSchema = new Schema({
   },
   place: {
     type: mongoose.Types.ObjectId,
-    ref: "Place",
+    ref: "Venue",
   },
   isActive: {
     type: Boolean,

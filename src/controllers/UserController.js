@@ -28,6 +28,7 @@ exports.signUp = async (req, res) => {
 //* generates cookie
 
 exports.signIn = async (req, res, next) => {
+  console.log(req.acceptsLanguages(['pl-PL','en-US']));
   const session = req.session;
   passport.authenticate("signin", async (err, user, info) => {
     try {

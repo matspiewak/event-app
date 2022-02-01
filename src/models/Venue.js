@@ -38,4 +38,4 @@ const placeSchema = new Schema({
   tags: [{ type: String }],
 });
 
-module.exports = mongoose.model("Place", placeSchema);
+module.exports = mongoose.model("Venue", placeSchema);
