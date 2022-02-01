@@ -37,7 +37,7 @@ exports.addEvent = async (req, res) => {
     ticketsLeft: req.body.ticketsLeft,
     eventWebsite: req.body.eventWebsite,
     ownerId: req.body.ownerId,
-    placeId: req.body.placeId,
+    venueId: req.body.venueId,
     isActive: req.body.isActive,
     tags: req.body.tags,
   });

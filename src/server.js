@@ -34,6 +34,7 @@ dbConnection();
 
 app.use(express.json());
 const UserRouter = require("./routes/UserRouter");
+const EventRouter = require("./routes/EventRouter");
 
 app.use(
   session({
@@ -68,6 +69,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/:lang/", UserRouter);
+app.use("/:lang/", EventRouter);
 app.use("/:lang/", (req, res) => {
   res.send(req.url);
 });
