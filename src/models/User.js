@@ -18,6 +18,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  organization: {
+    name: String,
+    website: String,
+  },
   lastName: {
     type: String,
     required: true,

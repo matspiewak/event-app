@@ -7,6 +7,10 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   startingDate: {
     type: Date,
     required: true,
@@ -36,11 +40,11 @@ const eventSchema = new Schema({
     type: String,
     required: false,
   },
-  owner: {
+  ownerId: {
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  place: {
+  placeId: {
     type: mongoose.Types.ObjectId,
     ref: "Venue",
   },
