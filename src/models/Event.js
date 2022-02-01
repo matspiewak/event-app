@@ -7,12 +7,39 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
-  startingDate: {},
-  endingDate: {},
-  ageRestriction: {},
-  ticketsLeft: {},
-  eventWebsite: {},
-  owner: { type: mongoose.Types.ObjectId, ref: "User" },
+  startingDate: {
+    type: Date,
+    required: true,
+  },
+  endingDate: {
+    type: Date,
+    required: true,
+  },
+  ageRestriction: {
+    isAgeRestricted: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    ageRestrictionValue: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  ticketsLeft: {
+    type: Number,
+    required: true,
+    default: Number.MAX_VALUE,
+  },
+  eventWebsite: {
+    type: String,
+    required: false,
+  },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
   place: {
     type: mongoose.Types.ObjectId,
     ref: "Place",
