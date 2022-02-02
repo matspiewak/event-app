@@ -28,7 +28,6 @@ exports.signUp = async (req, res) => {
 //* generates cookie
 
 exports.signIn = async (req, res, next) => {
-  console.log(req.acceptsLanguages(['pl-PL','en-US']));
   const session = req.session;
   passport.authenticate("signin", async (err, user, info) => {
     try {
@@ -36,11 +35,13 @@ exports.signIn = async (req, res, next) => {
         return res.status(404).json(info);
       }
       req.login(user, { session: false }, () => {
-        session.email = user.email;
+        session.userId = user._id;
+        session.organization = user.organization;
+        console.log(session);
         res.status(200).json(info);
       });
-    } catch (error) {
-      return;
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
     }
   })(req, res, next);
 };

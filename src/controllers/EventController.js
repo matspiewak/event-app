@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const Event = require("../models/Event");
+const User = require("../models/User");
 
 exports.getEvents = async (req, res) => {
   await Event.find({})
-    .populate("ownerId", ["organization.name"])
+    .populate("ownerId")
+    .populate("venueId", ["address", "title"])
     .then((docs) => {
       res.status(200).json(docs);
     })
@@ -13,11 +15,30 @@ exports.getEvents = async (req, res) => {
 };
 
 exports.getEvent = async (req, res) => {
-  await Event.findById({ id: req.params.id })
+  await Event.findById(req.params.id)
     .populate("ownerId", ["organization.name"])
     .then((event) => {
       res.status(200).json(event);
     })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+};
+
+exports.followEvent = async (req, res) => {
+  await Promise.all([
+    Event.findByIdAndUpdate(req.params.id, {
+      $push: {
+        followers: req.session.userId,
+      },
+    }),
+    User.findByIdAndUpdate(req.session.userId, {
+      $push: {
+        following: req.params.id,
+      },
+    }),
+  ])
+    .then(res.status(200).json({ message: "event added to followed list" }))
     .catch((err) => {
       res.status(500).json({ error: err.message });
     });
@@ -49,7 +70,8 @@ exports.addEvent = async (req, res) => {
     });
 };
 
-exports.editEvent = async (req, res) => { //! need redirect
+exports.editEvent = async (req, res) => {
+  //! need redirect
   const updatedEvent = new Event({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -74,7 +96,8 @@ exports.editEvent = async (req, res) => { //! need redirect
     });
 };
 
-exports.deleteEvent = async (req, res) => { //! need redirect
+exports.deleteEvent = async (req, res) => {
+  //! need redirect
   await Event.findByIdAndDelete({ id: req.params.id })
     .then(res.status(200).json({ message: "Event deleted successfully" }))
     .catch((err) => {

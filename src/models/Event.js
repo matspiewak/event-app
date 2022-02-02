@@ -44,7 +44,7 @@ const eventSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  placeId: {
+  venueId: {
     type: mongoose.Types.ObjectId,
     ref: "Venue",
   },
@@ -59,6 +59,7 @@ const eventSchema = new Schema({
     default: Date.now(),
   },
   tags: [{ type: String }],
+  followers: [{ type: mongoose.Types.ObjectId }],
 });
 
 module.exports = mongoose.model("Event", eventSchema);

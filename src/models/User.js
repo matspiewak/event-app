@@ -19,18 +19,21 @@ const userSchema = new Schema({
     required: true,
   },
   organization: {
-    name: String,
-    website: String,
+    isOrganiser: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    orgDetails: {
+      name: String,
+      website: String,
+    },
   },
   lastName: {
     type: String,
     required: true,
   },
-  isOrganiser: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
+
   dateOfBirth: {
     type: Date,
     required: false,

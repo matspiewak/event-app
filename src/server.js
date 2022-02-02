@@ -35,6 +35,7 @@ dbConnection();
 app.use(express.json());
 const UserRouter = require("./routes/UserRouter");
 const EventRouter = require("./routes/EventRouter");
+const VenueRouter = require("./routes/VenueRouter");
 
 app.use(
   session({
@@ -60,7 +61,6 @@ app.all("/", (req, res, next) => {
       res.redirect("/en/home");
       break;
   }
-  console.log(req.acceptsLanguages(["pl", "en"]));
   next();
 });
 
@@ -70,6 +70,7 @@ app.use(passport.session());
 
 app.use("/:lang/", UserRouter);
 app.use("/:lang/", EventRouter);
+app.use("/:lang/", VenueRouter);
 app.use("/:lang/", (req, res) => {
   res.send(req.url);
 });

@@ -7,23 +7,28 @@ const placeSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   address: {
     city: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     street: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     streetNumber: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
-    postalCode: { //? Cant really validate because of postal code differences in different countries
-        type: String,
-        required: true
-    }
+    postalCode: {
+      //? Cant really validate because of postal code differences in different countries
+      type: String,
+      required: true,
+    },
   },
   isAvailable: {
     type: Boolean,
