@@ -11,11 +11,11 @@ Promise.promisifyAll(redis.Multi.prototype);
 
 let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient({
-  host: process.env.REDIS_HOST,
+  host: 'eventsession.redis.cache.windows.net',
   port: 6380,
-  auth_pass: process.env.REDIS_AUTH,
+  auth_pass: 'DIFgMjn0rjmbGM48y4WLlAH5kRjlAYhTbAzCaM0VfPM=',
   tls: {
-    servername: process.env.REDIS_HOST,
+    servername: 'eventsession.redis.cache.windows.net',
   },
 });
 
@@ -39,7 +39,7 @@ const VenueRouter = require("./routes/VenueRouter");
 
 app.use(
   session({
-    secret: process.env.REDIS_SECRET,
+    secret: 'rlSCrT42Dm2orDs13',
     store: new RedisStore({
       client: redisClient,
     }),
@@ -75,7 +75,7 @@ app.use("/:lang/", (req, res) => {
   res.send(req.url);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 app.listen(port, () => {
   console.log(`server runs on port ${port}`);
