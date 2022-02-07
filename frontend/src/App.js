@@ -1,47 +1,36 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Events from "./api/Events";
+import Venues from "./api/Venues";
 
 function App() {
-  const [error, setError] = useState();
-  const [events, setEvents] = useState();
+  const eventsAddress = `/${navigator.language.slice(0, 2)}/events`;
+  const homeAddress = `/${navigator.language.slice(0, 2)}/home`;
+  const venuesAddress = `/${navigator.language.slice(0, 2)}/venues`;
 
-  const fetchData = async () => {
-    await fetch("https://eventplannerapi.azurewebsites.net/en/events")
-      .then((res) => res.json())
-      .then((events) => {
-        setEvents(events);
-      })
-      .catch((err) => {
-        setError(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-  console.log(events);
-  if(!events){
-    return <p>loading</p>
-  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p className="event">{events[0].title}</p>
-      </header>
-    </div>
+    <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to={homeAddress}>Home</Link>
+          </li>
+          <li>
+            <Link to={eventsAddress}>events</Link>
+          </li>
+          <li>
+            <Link to={venuesAddress}>Venues</Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <Routes>
+          <Route path="/:lang/home" />
+          <Route path="/:lang/events" element={<Events />} />
+          <Route path="/:lang/venues" element={<Venues />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 

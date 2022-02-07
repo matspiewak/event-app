@@ -4,6 +4,7 @@ const { dbConnection } = require("./nodeConnection");
 const session = require("express-session");
 const redis = require("redis");
 const passport = require("passport");
+const cors = require("cors");
 
 let Promise = require("bluebird");
 Promise.promisifyAll(redis.RedisClient.prototype);
@@ -20,7 +21,7 @@ let redisClient = redis.createClient({
 });
 
 const app = express();
-app.use(require("cors")());
+app.use(cors());
 
 redisClient.on("connect", async () => {
   console.log(
