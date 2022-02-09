@@ -1,0 +1,4 @@
+.carousel {
+    display: flex;
+    gap: var(--page-margin);
+}

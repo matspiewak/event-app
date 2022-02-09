@@ -1,34 +1,22 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Events from "./api/Events";
+import Home from "./api/Home";
 import Venues from "./api/Venues";
+import Navbar from "./componennts/Navbar";
 
 function App() {
-  const eventsAddress = `/${navigator.language.slice(0, 2)}/events`;
-  const homeAddress = `/${navigator.language.slice(0, 2)}/home`;
-  const venuesAddress = `/${navigator.language.slice(0, 2)}/venues`;
-
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to={homeAddress}>Home</Link>
-          </li>
-          <li>
-            <Link to={eventsAddress}>events</Link>
-          </li>
-          <li>
-            <Link to={venuesAddress}>Venues</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
       <main>
-        <Routes>
-          <Route path="/:lang/home" />
-          <Route path="/:lang/events" element={<Events />} />
-          <Route path="/:lang/venues" element={<Venues />} />
-        </Routes>
+        <div className="content">
+          <Routes>
+            <Route path="/:lang/home" element={<Home />} />
+            <Route path="/:lang/events" element={<Events />} />
+            <Route path="/:lang/venues" element={<Venues />} />
+          </Routes>
+        </div>
       </main>
     </Router>
   );

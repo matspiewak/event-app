@@ -1,0 +1,51 @@
+
+
+:root {
+    --max-content-width: 1100px;
+    --page-margin: 24px;
+}
+
+*,*::after,*::before {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+
+nav {
+    width: calc(var(--max-content-width) + 2*var(--page-margin));
+    max-width: 100%;
+    display: flex;    
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+}
+
+nav > * {
+    margin: 0 var(--page-margin);
+}
+
+
+
+ul {
+    display: flex;
+    list-style-type: none;
+    gap: var(--page-margin);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}

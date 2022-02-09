@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import EventCard from "../componennts/EventCard";
+import './styles.css'
 
 function Events() {
   const [error, setError] = useState();
@@ -22,11 +24,16 @@ function Events() {
   if (!events) {
     return <div>loading...</div>;
   }
+
   return (
-    <div>
-      {events[0].title}
-      {error}
-    </div>
+    <>
+      <h1>Events</h1>
+      <div className="carousel">
+        {events.map((event, i) => (
+          <EventCard key={i} title={event.title} tickets={event.ticketsLeft} />
+        ))}
+      </div>
+    </>
   );
 }
 
