@@ -2,6 +2,22 @@ const mongoose = require("mongoose");
 const Event = require("../models/Event");
 const User = require("../models/User");
 
+exports.verifySigned = (req, res, next) => {
+  const session = req.session;
+  if (!session.organization) {
+    return res.status(403).json({ message: "You have to be signed in" });
+  } else if (session.organization.isOrganiser) {
+    console.log(session);
+    next();
+  } else {
+    return res.status(403).json({ message: "No organizer status" });
+  }
+
+  // if (typeof session != "undefined" && session.organization.isOrganiser) {
+  //   next();
+  // } else
+};
+
 exports.getEvents = async (req, res) => {
   await Event.find({})
     .populate("ownerId")

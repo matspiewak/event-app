@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import EventCard from "../componennts/EventCard";
-import './styles.css'
+import "./styles.css";
 
 function Events() {
   const [error, setError] = useState();
@@ -24,14 +24,22 @@ function Events() {
   if (!events) {
     return <div>loading...</div>;
   }
+  const locationEvents = events.includes('zulul')
+  console.log(locationEvents)
 
   return (
     <>
-      <h1>Events</h1>
-      <div className="carousel">
-        {events.map((event, i) => (
-          <EventCard key={i} title={event.title} tickets={event.ticketsLeft} />
-        ))}
+      <div className="event-container">
+        <h1>Events in Gdańsk</h1>
+        <div className="carousel">
+          {events.map((event, i) => (
+            <EventCard
+              key={i}
+              title={event.title}
+              tickets={event.ticketsLeft}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

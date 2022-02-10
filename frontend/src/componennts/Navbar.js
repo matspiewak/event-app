@@ -5,6 +5,7 @@ function Navbar() {
   const eventsAddress = `/${navigator.language.slice(0, 2)}/events`;
   const homeAddress = `/${navigator.language.slice(0, 2)}/home`;
   const venuesAddress = `/${navigator.language.slice(0, 2)}/venues`;
+  const signInPage = `/${navigator.language.slice(0, 2)}/signin`;
 
   return (
     <header>
@@ -16,6 +17,9 @@ function Navbar() {
           </li>
           <li>
             <Link to={venuesAddress}>Venues</Link>
+          </li>
+          <li>
+            <Link to={signInPage}>Sign in</Link>
           </li>
         </ul>
       </nav>
