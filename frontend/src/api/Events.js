@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import EventCard from "../componennts/EventCard";
-import "./styles.css";
+import "./Events.css";
 
 function Events() {
   const [error, setError] = useState();
@@ -9,7 +9,7 @@ function Events() {
   useEffect(() => {
     const browserLanguage = navigator.language.slice(0, 2);
     const fetchData = async () => {
-      await fetch(`http://localhost:3001/${browserLanguage}/events`) //! dodać cors z localhost xxxx
+      await fetch(`https://eventplannerapi.azurewebsites.net/${browserLanguage}/events`) //! dodać cors z localhost xxxx
         .then((res) => res.json())
         .then((events) => {
           setEvents(events);

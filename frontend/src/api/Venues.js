@@ -7,7 +7,7 @@ function Venues() {
   useEffect(() => {
     const browserLanguage = navigator.language.slice(0, 2);
     const fetchData = async () => {
-      await fetch(`http://localhost:3001/${browserLanguage}/venues`) //! dodać cors z localhost xxxx
+      await fetch(`https://eventplannerapi.azurewebsites.net/${browserLanguage}/venues`) //! dodać cors z localhost xxxx
         .then((res) => res.json())
         .then((venues) => {
           setVenues(venues);

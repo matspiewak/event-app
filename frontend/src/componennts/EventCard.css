@@ -9,8 +9,8 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.container {
-    width: 200px;
+.card-event-container {
+    width: calc(var(--max-content-width)/4);
     height: 350px;
 }
 

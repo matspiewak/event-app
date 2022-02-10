@@ -4,6 +4,8 @@ import Events from "./api/Events";
 import Home from "./api/Home";
 import Venues from "./api/Venues";
 import Navbar from "./componennts/Navbar";
+import SignIn from "./api/SignIn";
+import SignUp from "./api/SignUp";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             <Route path="/:lang/home" element={<Home />} />
             <Route path="/:lang/events" element={<Events />} />
             <Route path="/:lang/venues" element={<Venues />} />
+            <Route path="/:lang/signin" element={<SignIn />} />
+            <Route path="/:lang/signup" element={<SignUp />} />
           </Routes>
         </div>
       </main>

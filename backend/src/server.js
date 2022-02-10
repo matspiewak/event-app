@@ -21,7 +21,12 @@ let redisClient = redis.createClient({
 });
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 redisClient.on("connect", async () => {
   console.log(
@@ -48,8 +53,8 @@ app.use(
     saveUninitialized: false,
     resave: false,
     cookie: {
-      secure: false,
-      httpOnly: false,
+      secure: true,
+      httpOnly: true,
     },
   })
 );

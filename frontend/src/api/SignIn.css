@@ -1,0 +1,52 @@
+:root {
+    --color-secondary: #F9BF3B;
+}
+
+.signSVG {
+    width: 60%;
+}
+
+.container {
+    display: flex;
+    margin: 10% auto;
+    width: 80%;
+    gap: 24px;
+}
+
+.form-container {
+    width: 40%;
+    /* background: lightcoral; */
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 24px 0 0 0;
+}
+
+h2 {
+    font-size: 0.7em;
+}
+
+h2 > a {
+    font-size: 1.2em;
+    color: var(--color-secondary)
+}
+
+label {
+    display: block;
+    margin: 20px 0 5px 5px;
+    font-size: 12px;
+}
+
+form>input {
+    width: 90%;
+    border: 2px var(--color-secondary) solid;
+    height: 40px;
+    border-radius: 10px;
+}
+
+form>input:nth-child(5) {
+    background: var(--color-secondary);
+    display: block;
+    margin: 24px 0;
+}

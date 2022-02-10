@@ -2,7 +2,7 @@ import "./EventCard.css";
 
 function EventCard(props) {
   return (
-    <div className="container">
+    <div className="card-event-container">
       <img src="https://source.unsplash.com/random" alt="something" />
       <div className="bottom">
         <p className="title">{props.title}</p>

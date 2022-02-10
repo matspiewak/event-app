@@ -12,11 +12,9 @@ exports.verifySigned = (req, res, next) => {
   } else {
     return res.status(403).json({ message: "No organizer status" });
   }
-
-  // if (typeof session != "undefined" && session.organization.isOrganiser) {
-  //   next();
-  // } else
 };
+
+//! need additionaL middleware to verify if owner
 
 exports.getEvents = async (req, res) => {
   await Event.find({})

@@ -11,13 +11,6 @@ exports.signUp = async (req, res) => {
     password: hashedPassword,
     name: req.body.name,
     lastName: req.body.lastName,
-    organization: {
-      isOrganiser: req.body.organization.isOrganiser,
-      orgDetails: {
-        name: req.body.organization.orgDetails.name,
-        website: req.body.organization.orgDetails.website,
-      },
-    },
     dateOfBirth: req.body.dateOfBirth,
   });
   await user

@@ -18,7 +18,7 @@ function Navbar() {
           <li>
             <Link to={venuesAddress}>Venues</Link>
           </li>
-          <li>
+          <li id="signin">
             <Link to={signInPage}>Sign in</Link>
           </li>
         </ul>
