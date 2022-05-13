@@ -12,11 +12,11 @@ Promise.promisifyAll(redis.Multi.prototype);
 
 let RedisStore = require("connect-redis")(session);
 let redisClient = redis.createClient({
-  host: "eventsession.redis.cache.windows.net",
+  host: process.env.REDIS_SERVER,
   port: 6380,
-  auth_pass: "DIFgMjn0rjmbGM48y4WLlAH5kRjlAYhTbAzCaM0VfPM=",
+  auth_pass: process.env.REDIS_PASS,
   tls: {
-    servername: "eventsession.redis.cache.windows.net",
+    servername: process.env.REDIS_SERVER,
   },
 });
 
